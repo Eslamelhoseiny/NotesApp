@@ -19,6 +19,6 @@ public interface NoteDao {
     @Update
     void update(Note note);
 
-    @Query("select * from note")
+    @Query("select * from note order by id desc")
     LiveData<List<Note>> getAll();
 }
