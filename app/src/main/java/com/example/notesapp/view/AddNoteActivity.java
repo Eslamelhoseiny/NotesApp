@@ -10,6 +10,9 @@ import com.example.notesapp.R;
 import com.example.notesapp.model.Note;
 import com.example.notesapp.repository.NoteRepository;
 
+import io.reactivex.CompletableObserver;
+import io.reactivex.disposables.Disposable;
+
 public class AddNoteActivity extends AppCompatActivity {
 
     private EditText etTitle, etDescription;
@@ -26,7 +29,21 @@ public class AddNoteActivity extends AppCompatActivity {
         String title = etTitle.getText().toString();
         String description = etDescription.getText().toString();
         Note note = new Note(title, description);
-        NoteRepository.getInstance(this).insertNote(note);
-        finish();
+        NoteRepository.getInstance(this).insertNote(note, new CompletableObserver() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                finish();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

@@ -40,47 +40,17 @@ public class NoteRepository {
         return notes;
     }
 
-    public void insertNote(Note note) {
+    public void insertNote(Note note, CompletableObserver completableObserver) {
         Completable.fromRunnable(() -> noteDao.insert(note))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new CompletableObserver() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-                });
+                .subscribe(completableObserver);
     }
 
-    public void updateNote(Note note) {
+    public void updateNote(Note note, CompletableObserver completableObserver) {
         Completable.fromRunnable(() -> noteDao.update(note))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new CompletableObserver() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-                });
+                .subscribe(completableObserver);
     }
 }
